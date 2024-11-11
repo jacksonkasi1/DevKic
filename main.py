@@ -7,11 +7,25 @@ from flask import Flask, Blueprint, request, send_from_directory, render_templat
 from threading import Thread
 from time import sleep
 
+from dotenv import load_dotenv
+
 # Correctly import the completion function from LiteLLM
 from litellm import completion, supports_function_calling
 
+
+# Load environment variables from .env file
+load_dotenv()
+
+# access these keys from environment variables
+MODEL_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+# MODEL_API_KEY = os.getenv("SAMBANOVA_API_KEY")
+
 # Configuration
-MODEL_NAME = os.environ.get('LITELLM_MODEL', 'gpt-4o')  # Default model; can be swapped easily
+MODEL_NAME = 'deepseek/deepseek-chat' # Default model; can be swapped easily
+
+# https://docs.litellm.ai/docs/providers/sambanova
+# MODEL_NAME = 'sambanova/Meta-Llama-3.1-8B-Instruct' # Default model; can be swapped easily
+
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -340,7 +354,8 @@ def run_main_loop(user_input):
                 model=MODEL_NAME,
                 messages=messages,
                 tools=tools,
-                tool_choice="auto"
+                tool_choice="auto",
+                api_key=MODEL_API_KEY
             )
 
             if not response.choices[0].message:
@@ -418,7 +433,8 @@ def run_main_loop(user_input):
                 # Second response to include the tool call
                 second_response = completion(
                     model=MODEL_NAME,
-                    messages=messages
+                    messages=messages,
+                    api_key=MODEL_API_KEY
                 )
                 if second_response.choices and second_response.choices[0].message:
                     second_response_message = second_response.choices[0].message
