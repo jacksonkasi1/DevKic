@@ -17,14 +17,14 @@ from litellm import completion, supports_function_calling
 load_dotenv()
 
 # access these keys from environment variables
-MODEL_API_KEY = os.getenv("DEEPSEEK_API_KEY")
-# MODEL_API_KEY = os.getenv("SAMBANOVA_API_KEY")
+# MODEL_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+MODEL_API_KEY = os.getenv("SAMBANOVA_API_KEY")
 
 # Configuration
-MODEL_NAME = 'deepseek/deepseek-chat' # Default model; can be swapped easily
+# MODEL_NAME = 'deepseek/deepseek-chat' # Default model; can be swapped easily
 
 # https://docs.litellm.ai/docs/providers/sambanova
-# MODEL_NAME = 'sambanova/Meta-Llama-3.1-8B-Instruct' # Default model; can be swapped easily
+MODEL_NAME = 'sambanova/Meta-Llama-3.1-8B-Instruct' # Default model; can be swapped easily
 
 
 # Initialize Flask app
